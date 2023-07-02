@@ -1,54 +1,63 @@
-var InicioElement = document.querySelector("#Menu li:nth-child(1)");
-var rickElement = document.querySelector("#Menu li:nth-child(2)");
-var JerryElement = document.querySelector("#Menu li:nth-child(3)");
-var mortyElement = document.querySelector("#Menu li:nth-child(4)");
-var name = "";
+const inicioElement = document.querySelector("#Menu li:nth-child(1)");
+const rickElement = document.querySelector("#Menu li:nth-child(2)");
+const jerryElement = document.querySelector("#Menu li:nth-child(3)");
+const mortyElement = document.querySelector("#Menu li:nth-child(4)");
+let nombre = "";
+let pagina = 1;
+
+const btnAnterior = document.getElementById("btnAnterior");
+const btnSiguiente = document.getElementById("btnSiguiente");
+
 // Agrega los manejadores de evento para cada elemento
-mortyElement.addEventListener("click", () =>{
-    pagina=1;
-  name = "Morty";
-  cargarApi();
-});
-
-rickElement.addEventListener("click", function () {
-    pagina=1;
-  name = "Rick";
-  cargarApi();
-});
-JerryElement.addEventListener("click", function () {
-    pagina=1
-  name = "Jerry";
-  cargarApi();
-});
-
-InicioElement.addEventListener("click", function () {
-  name = "";
+inicioElement.addEventListener("click", function () {
+  nombre = "";
   pagina = 1;
   cargarApi();
 });
-
-var pagina = 1;
-const btnAnterior = document.getElementById("btnAnterior");
-const btnSiguiente = document.getElementById("btnSiguiente");
-btnAnterior.addEventListener("click", () => {
-  if (pagina > 1) {
-    pagina--;
-    cargarApi();
-  } else {
-    console.log("Pai Abusa");
-  }
+mortyElement.addEventListener("click", () => {
+  pagina = 1;
+  nombre = "Morty";
+  cargarApi();
 });
+
+jerryElement.addEventListener("click", function () {
+  pagina = 1;
+  nombre = "Jerry";
+  cargarApi();
+});
+rickElement.addEventListener("click", function () {
+  pagina = 1;
+  nombre = "Rick";
+  cargarApi();
+});
+
+try {
+  btnAnterior.addEventListener("click", () => {
+    if (pagina > 1) {
+      pagina--;
+      cargarApi();
+    } else {
+      console.log("Pai Abusa");
+    }
+  });
+} catch (error) {
+  console.log("Error: " + error);
+}
 btnSiguiente.addEventListener("click", () => {
-  if (pagina < 50) {
-    pagina += 1;
-    cargarApi();
-  } else {
-    console.log("Klk");
+  try {
+    if (pagina < 50) {
+      pagina += 1;
+      cargarApi();
+    } else {
+      console.log("Klk");
+    }
+  } catch (error) {
+    console.log(error);
   }
 });
 const cargarApi = async () => {
   const conexion = await fetch(
-    `https://rickandmortyapi.com/api/character/?page=${pagina}&name=${name}`
+    `https://rickandmortyapi.com/api/character/?page=${pagina}&name=${nombre}`
   );
   const respuesta = await conexion.json();
   let character1 = "";
